@@ -1,0 +1,6 @@
+resolver: lts-11.10
+
+packages:
+  - .
+
+system-ghc: true

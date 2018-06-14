@@ -1,0 +1,10 @@
+name: bmin
+version: 0.1.0
+author: Sheheryar Parvaz <skipper308@hotmail.ca>
+
+dependencies:
+  - base
+
+executable:
+  main: Main.hs
+  source-dirs: src
