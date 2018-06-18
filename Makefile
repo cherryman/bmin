@@ -3,9 +3,12 @@ prog	= bmin
 all: build
 
 build:
-	stack build
+	@stack build
 
-run:
+run: build
 	@stack exec $(prog)
 
-.PHONY: all build run
+repl: build
+	@stack ghci
+
+.PHONY: all build run repl

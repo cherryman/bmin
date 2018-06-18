@@ -4,6 +4,7 @@ author: Sheheryar Parvaz <skipper308@hotmail.ca>
 
 dependencies:
   - base
+  - containers
 
 executable:
   main: Main.hs

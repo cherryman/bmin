@@ -3,4 +3,9 @@ resolver: lts-11.10
 packages:
   - .
 
+apply-ghc-options: locals
+
+ghc-options:
+  "$locals": -Wall -Werror
+
 system-ghc: true
