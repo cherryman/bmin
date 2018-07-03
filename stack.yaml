@@ -6,6 +6,6 @@ packages:
 apply-ghc-options: locals
 
 ghc-options:
-  "$locals": -Wall -Werror
+  "$locals": -Wall
 
 system-ghc: true

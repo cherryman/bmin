@@ -7,5 +7,25 @@ dependencies:
   - containers
 
 executable:
+  source-dirs: app
   main: Main.hs
+  dependencies:
+    - bmin
+
+library:
   source-dirs: src
+  exposed-modules:
+    - Bool
+    - Bool.Term
+    - Bool.TermSet
+    - Algorithm
+
+tests:
+  spec:
+    main: Spec.hs
+    source-dirs:
+      - test
+    dependencies:
+      - bmin
+      - hspec
+      - QuickCheck
