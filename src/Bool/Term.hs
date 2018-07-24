@@ -4,9 +4,11 @@ module Bool.Term
     , empty
     , singleton
     , fromList
+    , varList
     , lookup
     , insert
     , delete
+    , delVar
     , member
     , fold
     , covers
@@ -52,11 +54,16 @@ lookup v =
 -- when the 'Variable' isn't a member of the 'Term'.
 insert :: Literal -> Term -> Term
 insert (Literal var val)
-    | val == X  = Term . Map.delete var     . unTerm
+    | val == X  = delVar var --Term . Map.delete var     . unTerm
     | otherwise = Term . Map.insert var val . unTerm
 
 fromList :: [(Variable, Value)] -> Term
 fromList = Term . Map.fromList
+
+
+-- | A list of 'Variable's in the 'Term'.
+varList :: Term -> [Variable]
+varList = fold (\a (Literal v _) -> v:a) []
 
 -- | Delete a 'Literal' from a 'Term'.
 -- Does nothing if the 'Literal' is not
@@ -71,6 +78,10 @@ delete l@(Literal var _) =
     del k v
         | l == Literal k v = Nothing
         | otherwise        = Just v
+
+-- | Delete a 'Variable' from a 'Term'.
+delVar :: Variable -> Term -> Term
+delVar v = Term . Map.delete v . unTerm
 
 -- | Check if a 'Literal' is a member of a 'Term'
 member ::  Literal -> Term -> Bool

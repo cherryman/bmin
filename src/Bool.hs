@@ -25,9 +25,8 @@ data Value = F
 data Literal = Literal Variable Value
     deriving (Eq, Ord)
 
--- | Negative and Don't Care literals have the variable
--- name prefixed with '~' and '-', respectively. Positive
--- literals are printed as is.
+-- | Positive, Negative and Don't Care literals have the
+-- variable name prefixed with '+', '~' and '-', respectively.
 instance Show Literal where
     show (Literal var val) =
         case val of

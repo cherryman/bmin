@@ -7,7 +7,7 @@ module Bool.TermSet
     , fromPairList
     , insert
     , delete
-    , (\\)
+    , map
     , filter
     , fold
     , covered
@@ -15,9 +15,10 @@ module Bool.TermSet
     , intersects
     ) where
 
+import qualified Data.List as List
 import           Data.Set  (Set)
 import qualified Data.Set  as Set
-import           Prelude   hiding (filter)
+import           Prelude   hiding (filter, map)
 
 import           Bool      (Value, Variable)
 import           Bool.Term (Term, covers)
@@ -41,17 +42,15 @@ fromList :: [Term] -> TermSet
 fromList = TermSet . Set.fromList
 
 fromPairList :: [[(Variable, Value)]] -> TermSet
-fromPairList = fromList . map (Term.fromList)
+fromPairList = fromList . List.map (Term.fromList)
 
 -- | Delete a 'Term' from a 'TermSet'.
 delete :: Term -> TermSet -> TermSet
 delete t = TermSet . Set.delete t . unTermSet
 
-(\\) :: TermSet -> TermSet -> TermSet
-(\\) t0 t1 = TermSet $ (Set.\\) a b
-  where
-    a = unTermSet t0
-    b = unTermSet t1
+-- | Apply a function to every 'Term' in the 'TermSet'.
+map :: (Term -> Term) -> TermSet -> TermSet
+map f = TermSet . Set.map f . unTermSet
 
 -- | Filter the 'TermSet' using the given predicate.
 filter :: (Term -> Bool) -> TermSet -> TermSet
