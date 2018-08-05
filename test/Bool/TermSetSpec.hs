@@ -7,7 +7,8 @@ import           Test.Hspec
 import           Test.Hspec.QuickCheck
 import           Test.QuickCheck
 
-import           Bool                  (Literal (..), Value (..))
+import           Bool
+    (Literal (..), Value (..), Variable (..), newLit)
 import qualified Bool.Term             as Term
 import           Bool.TermSet
 
@@ -24,12 +25,12 @@ spec :: Spec
 spec = do
   describe "insert" $
     it "inserts a term into a termset" $
-      let t = Term.singleton (Literal "" T)
+      let t = Term.singleton (newLit "" T)
       in  insert t empty `shouldBe` singleton t
 
   describe "delete" $
     it "deletes a term from a termset" $
-      let t = Term.singleton (Literal "" T)
+      let t = Term.singleton (newLit "" T)
       in  delete t (singleton t) `shouldBe` empty
 
   describe "filter" $

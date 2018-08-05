@@ -3,9 +3,11 @@ module Bool.TermSet
       TermSet
     , empty
     , singleton
+    , insert
+    , member
     , fromList
     , fromPairList
-    , insert
+    , toList
     , delete
     , map
     , filter
@@ -20,7 +22,7 @@ import           Data.Set  (Set)
 import qualified Data.Set  as Set
 import           Prelude   hiding (filter, map)
 
-import           Bool      (Value, Variable)
+import           Bool      (Value)
 import           Bool.Term (Term, covers)
 import qualified Bool.Term as Term
 
@@ -38,11 +40,17 @@ singleton = TermSet . Set.singleton
 insert :: Term -> TermSet -> TermSet
 insert t = TermSet . Set.insert t . unTermSet
 
+member :: Term -> TermSet -> Bool
+member t = Set.member t . unTermSet
+
 fromList :: [Term] -> TermSet
 fromList = TermSet . Set.fromList
 
-fromPairList :: [[(Variable, Value)]] -> TermSet
-fromPairList = fromList . List.map (Term.fromList)
+fromPairList :: [[(String, Value)]] -> TermSet
+fromPairList = fromList . List.map (Term.fromPairList)
+
+toList :: TermSet -> [Term]
+toList = Set.toList . unTermSet
 
 -- | Delete a 'Term' from a 'TermSet'.
 delete :: Term -> TermSet -> TermSet

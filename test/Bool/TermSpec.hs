@@ -23,22 +23,22 @@ spec :: Spec
 spec = do
   describe "lookup" $ do
     it "returns X when element is not present" $
-      lookup "" empty `shouldBe` X
+      lookup (Variable "") empty `shouldBe` X
 
     it "returns the element related to the key" $ do
-      lookup "0" (singleton $ Literal "0" F) `shouldBe` F
-      lookup "1" (singleton $ Literal "1" T) `shouldBe` T
+      lookup (Variable "0") (singleton $ newLit "0" F) `shouldBe` F
+      lookup (Variable "1") (singleton $ newLit "1" T) `shouldBe` T
 
   describe "insert" $ do
     it "does nothing when inserting X when key is not present" $
-      insert (Literal "" X) empty `shouldBe` empty
+      insert (newLit "" X) empty `shouldBe` empty
 
     it "deletes the literal when replacing with X" $
-      insert (Literal "" X) (singleton $ Literal "" T) `shouldBe` empty
+      insert (newLit "" X) (singleton $ newLit "" T) `shouldBe` empty
 
     it "inserts an element" $ do
-      insert (Literal "0" F) empty `shouldBe` singleton (Literal "0" F)
-      insert (Literal "1" T) empty `shouldBe` singleton (Literal "1" T)
+      insert (newLit "0" F) empty `shouldBe` singleton (newLit "0" F)
+      insert (newLit "1" T) empty `shouldBe` singleton (newLit "1" T)
 
   describe "delete" $ do
     prop "deletes a literal from the term" $
@@ -69,5 +69,5 @@ spec = do
       t0 `covers` t1 `shouldBe` True
       t1 `covers` t0 `shouldBe` False
         where
-        t0 = fromList [("0",T)]
-        t1 = fromList [("0",T), ("1",F)]
+        t0 = fromPairList [("0", T)]
+        t1 = fromPairList [("0", T), ("1", F)]

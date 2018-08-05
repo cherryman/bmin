@@ -52,7 +52,7 @@ mostFreqLiterals vars ts =
         . Map.filter (==highestCount) -- only keep the highest count
         $ literalCounts
 
--- Build a 'TermSet' which covers the entire ON-Set without
+-- | Build a 'TermSet' which covers the entire ON-Set without
 -- intersect the OFF-Set.
 cdSearch :: TermSet -- ^ ON-Set
          -> TermSet -- ^ OFF-Set

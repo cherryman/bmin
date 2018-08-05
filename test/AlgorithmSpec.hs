@@ -7,7 +7,8 @@ import           Test.Hspec.QuickCheck
 import           Test.QuickCheck       hiding (cover)
 
 import           Algorithm
-import           Bool                  (Literal (..), Value (..))
+import           Bool
+    (Literal (..), Value (..), Variable (..), newLit)
 import           Bool.TermSet          (TermSet)
 import qualified Bool.TermSet          as TermSet
 
@@ -39,25 +40,25 @@ spec = do
   describe "countLiterals" $
     it "returns a count of every literal in the term" $
       let lc = Map.fromList
-           [ (Literal "0" T, 2)
-           , (Literal "0" F, 4)
-           , (Literal "1" T, 2)
-           , (Literal "1" F, 4)
-           , (Literal "2" T, 3)
-           , (Literal "2" F, 3)
-           ]
-     in countLiterals off `shouldBe` lc
+            [ (newLit "0" T, 2)
+            , (newLit "0" F, 4)
+            , (newLit "1" T, 2)
+            , (newLit "1" F, 4)
+            , (newLit "2" T, 3)
+            , (newLit "2" F, 3)
+            ]
+       in countLiterals off `shouldBe` lc
 
   describe "mostFreqLiterals" $
     it "returns the most frequent literals in the termset" $ do
       mostFreqLiterals [] on `shouldBe`
-          [(Literal "0" T), (Literal "1" T)]
+          [(newLit "0" T), (newLit "1" T)]
 
       mostFreqLiterals [] off `shouldBe`
-          [(Literal "0" F), (Literal "1" F)]
+          [(newLit "0" F), (newLit "1" F)]
 
-      mostFreqLiterals ["0", "1"] off `shouldBe`
-          [(Literal "2" F), (Literal "2" T)]
+      mostFreqLiterals [Variable "0", Variable "1"] off `shouldBe`
+          [(newLit "2" F), (newLit "2" T)]
 
   describe "cdSearch" $ do
     it "returns the ON-Set when the OFF-Set is empty" $

@@ -19,6 +19,8 @@ library:
     - Bool.Term
     - Bool.TermSet
     - Algorithm
+    - Algorithm.Impl
+    - Algorithm.Boom
 
 tests:
   spec:

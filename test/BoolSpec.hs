@@ -4,7 +4,10 @@ module BoolSpec (spec) where
 import           Test.Hspec
 import           Test.QuickCheck
 
-import           Bool            (Literal (..), Value (..))
+import           Bool            (Literal (..), Value (..), Variable (..))
+
+instance Arbitrary Variable where
+  arbitrary = Variable <$> arbitrary
 
 instance Arbitrary Value where
     arbitrary = elements [F,X,T]

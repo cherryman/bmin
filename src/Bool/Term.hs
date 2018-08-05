@@ -4,6 +4,7 @@ module Bool.Term
     , empty
     , singleton
     , fromList
+    , fromPairList
     , varList
     , lookup
     , insert
@@ -21,7 +22,7 @@ import qualified Data.Map.Strict as Map
 import           Data.Maybe      (fromMaybe)
 
 import           Bool
-    (Literal (..), Value (..), Variable, coversValue)
+    (Literal (..), Value (..), Variable (..), coversValue)
 
 
 -- | A set of variables with an associated value.
@@ -60,6 +61,11 @@ insert (Literal var val)
 fromList :: [(Variable, Value)] -> Term
 fromList = Term . Map.fromList
 
+fromPairList :: [(String, Value)] -> Term
+fromPairList =
+    fromList . fmap mkVar
+  where
+    mkVar (var, val) = (Variable var, val)
 
 -- | A list of 'Variable's in the 'Term'.
 varList :: Term -> [Variable]
