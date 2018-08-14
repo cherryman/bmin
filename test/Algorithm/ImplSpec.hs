@@ -28,5 +28,5 @@ off = TermSet.fromPairList
 spec :: Spec
 spec = do
     describe "expand" $
-      it "expands every term in a termset without intersect the off-set" $
+      it "expands every term without intersect the off-set" $
         expand t off `shouldBe` t_expanded

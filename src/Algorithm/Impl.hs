@@ -1,33 +1,12 @@
 module Algorithm.Impl
     (
-      Buf(..)
-    , emptyBuf
-    , insertBuf
-    , expand
+      expand
     ) where
 
 import           Bool.Term    (Term)
 import qualified Bool.Term    as Term
 import           Bool.TermSet (TermSet, intersects)
 import qualified Bool.TermSet as TermSet
-
-data Buf = Buf
-    { implicantBuf :: TermSet
-    , expandBuf    :: TermSet
-    , reduceBuf    :: TermSet
-    }
-
-emptyBuf :: Buf
-emptyBuf = Buf TermSet.empty TermSet.empty TermSet.empty
-
-insertBuf :: Term -> Buf -> Buf
-insertBuf it b@(Buf impl _ _)
-    | TermSet.member it impl = b
-    | otherwise              = insert it b
-  where
-    insert :: Term -> Buf -> Buf
-    insert t (Buf i e r) =
-        Buf (TermSet.insert t i) (TermSet.insert t e) r
 
 -- | Expand a Term until it intersects the given set
 expandTerm :: Term    -- ^ Term to expand
