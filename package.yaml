@@ -16,6 +16,8 @@ library:
   source-dirs: src
   exposed-modules:
     - Bool
+    - Bool.Buf
+    - Bool.Function
     - Bool.Term
     - Bool.TermSet
     - Algorithm

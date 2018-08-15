@@ -55,7 +55,7 @@ spec = do
       \l -> member l . insert l <$> arbitrary
 
   describe "fold" $
-    prop "folds over every literal in the term" $ do
+    prop "folds over every literal in the term" $
       \t -> fold (flip delete) t t == empty
 
   describe "covers" $ do

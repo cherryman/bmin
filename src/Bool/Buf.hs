@@ -1,7 +1,8 @@
 module Bool.Buf
     (
-      FnBuf
-    , Buf
+      FnBuf(..)
+    , Buf(..)
+    , fromFn
     , fromFnGroup
     ) where
 
@@ -10,13 +11,14 @@ import           Bool.TermSet  (TermSet)
 import qualified Bool.TermSet  as TermSet
 
 data FnBuf = FnBuf
-    { fn        :: Function
+    { bufFn     :: Function
     , implBuf   :: TermSet
     , expandBuf :: TermSet
     }
+    deriving (Show, Eq)
 
 data Buf = Buf
-    { fns       :: [FnBuf]
+    { bufFns    :: [FnBuf]
     , reduceBuf :: TermSet
     }
 

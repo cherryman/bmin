@@ -31,10 +31,6 @@ off = TermSet.fromPairList
   , [("0", F), ("1", F), ("2", F)]
   ]
 
-cover :: TermSet
-cover = TermSet.fromPairList
-  [ [("0", T), ("1", T)] ]
-
 spec :: Spec
 spec = do
   describe "countLiterals" $
@@ -59,17 +55,3 @@ spec = do
 
       mostFreqLiterals [Variable "0", Variable "1"] off `shouldBe`
           [(newLit "2" F), (newLit "2" T)]
-
-  describe "cdSearch" $ do
-    it "returns the ON-Set when the OFF-Set is empty" $
-      cdSearch on TermSet.empty `shouldBe` on
-
-    it "returns an empty termset when the ON-Set is empty" $
-      cdSearch TermSet.empty off `shouldBe` TermSet.empty
-
-    it "returns the smallest cover for the ON-Set" $
-      cdSearch on off `shouldBe` cover
-
-    prop "terminates" $
-      within 5000 $ -- 5000ms is chosen arbitrarily
-        (cdSearch <$> arbitrary <*> arbitrary) `seq` True

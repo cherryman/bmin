@@ -2,7 +2,6 @@ module Algorithm
     (
       countLiterals
     , mostFreqLiterals
-    , cdSearch
     ) where
 
 import           Data.Map.Strict (Map)
@@ -51,39 +50,3 @@ mostFreqLiterals vars ts =
         . Map.toList                  -- we want a list of literals
         . Map.filter (==highestCount) -- only keep the highest count
         $ literalCounts
-
--- | Build a 'TermSet' which covers the entire ON-Set without
--- intersect the OFF-Set.
-cdSearch :: TermSet -- ^ ON-Set
-         -> TermSet -- ^ OFF-Set
-         -> TermSet
-cdSearch on off
-    | on  == TermSet.empty = TermSet.empty
-    | off == TermSet.empty = on
-    | otherwise =
-        TermSet.insert newTerm (cdSearch newOn off)
-  where
-    pickNextLiteral :: Term -> [Literal] -> Literal
-    pickNextLiteral _ [] = error "Cannot pick literal from empty list"
-    pickNextLiteral _ [x] = x
-    pickNextLiteral t (l:ls)
-        | oldCover /= newCover = l
-        | otherwise            = pickNextLiteral t ls
-      where
-        oldCover = TermSet.covered t off
-        newCover = TermSet.covered (Term.insert l t) off
-
-    -- Search for the most frequent literal in the
-    -- ON-Set that doesn't intesect the OFF-Set.
-    nextTerm :: Term -> TermSet -> Term
-    nextTerm t ts
-        | nt `intersects` off = nextTerm nt cts
-        | otherwise           = nt
-      where
-        vars = Term.varList t
-        nextLiteral = pickNextLiteral t (mostFreqLiterals vars ts)
-        nt   = Term.insert nextLiteral t
-        cts  = TermSet.covered nt ts
-
-    newTerm = nextTerm Term.empty on
-    newOn   = TermSet.notCovered newTerm on

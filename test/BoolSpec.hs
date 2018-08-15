@@ -7,7 +7,7 @@ import           Test.QuickCheck
 import           Bool            (Literal (..), Value (..), Variable (..))
 
 instance Arbitrary Variable where
-  arbitrary = Variable <$> arbitrary
+    arbitrary = Variable <$> arbitrary
 
 instance Arbitrary Value where
     arbitrary = elements [F,X,T]

@@ -12,6 +12,7 @@ data Function = Function
     { onSet  :: TermSet
     , offSet :: TermSet
     }
+    deriving (Show, Eq)
 
 type FnGroup = [Function]
 

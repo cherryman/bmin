@@ -5,6 +5,7 @@ module Bool.TermSet
     , singleton
     , insert
     , member
+    , union
     , fromList
     , fromPairList
     , toList
@@ -43,11 +44,14 @@ insert t = TermSet . Set.insert t . unTermSet
 member :: Term -> TermSet -> Bool
 member t = Set.member t . unTermSet
 
+union :: TermSet -> TermSet -> TermSet
+union t0 t1 = TermSet $ Set.union (unTermSet t0) (unTermSet t1)
+
 fromList :: [Term] -> TermSet
 fromList = TermSet . Set.fromList
 
 fromPairList :: [[(String, Value)]] -> TermSet
-fromPairList = fromList . List.map (Term.fromPairList)
+fromPairList = fromList . List.map Term.fromPairList
 
 toList :: TermSet -> [Term]
 toList = Set.toList . unTermSet
